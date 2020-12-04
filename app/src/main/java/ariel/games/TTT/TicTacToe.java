@@ -1,17 +1,15 @@
-package com.example.TTT;
+package ariel.games.TTT;
 
 import android.os.Bundle;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+
 import androidx.appcompat.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuItem;
+
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class TicTacToe extends AppCompatActivity {
     private Button[][] board;   // change to our own Board implementation
 
     private boolean player1Turn;
@@ -20,45 +18,62 @@ public class MainActivity extends AppCompatActivity {
     private int numMoves;
     private TextView player1Text;
     private TextView player2Text;
+    private boolean wonAlready;
+    private String EMPTY = " - ";
 
 
 
     protected void onCreate(Bundle savedInstanceState) {
-      super.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState);
 
         // set player1turn to true (player1 starts first)
         player1Turn = true;
+        wonAlready = false;
         // set default values to score and move trackers.
         player1Score = 0;
         player2Score = 0;
         numMoves = 0;
 
+
+
         // init 3-d array into series of empty buttons
         board = new Button[3][3];
-            // set the activity
-        setContentView(R.layout.activity_main_activity);
+        // set the activity
+        setContentView(R.layout.activity_tic_tac_toe);
 
-        for(int i = 0; i< board.length; i++){
-            for(int j = 0; j < board[i].length; i++){
+        player1Text = findViewById(R.id.player1Text);
+        player2Text = findViewById(R.id.player2);
+
+        for(int i = 0; i<3; i++){
+            for(int j = 0; j < 3; j++){
+
                 String buttonID = "button_" + i + j;
                 int resourceID = getResources().getIdentifier(buttonID, "id", getPackageName());
-                Button currButton = board[i][j];
-                currButton = findViewById(resourceID);
-                // TODO: currButton is null here?
-                currButton.setOnClickListener(new View.OnClickListener(){
-                    @Override
-                    public void onClick(View view) {
 
-                    }
-                });
+                Button currButton = findViewById(resourceID);
+                currButton.setOnClickListener((View.OnClickListener) this);
+                currButton.setText(EMPTY);
+                board[i][j]=currButton; // set curr square in board to the button
+
+
             }
         }
 
         Button reset = findViewById(R.id.button_reset);
+        Button hardReset = findViewById(R.id.hardReset);
         reset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                reset();
+            }
+        });
 
+        hardReset.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                reset();
+                player1Text.setText("Player 1: 0");
+                player2Text.setText("Player 2: 0");
             }
         });
 
@@ -72,15 +87,14 @@ public class MainActivity extends AppCompatActivity {
         // set player1turn to true (player1 starts first)
         player1Turn = true;
         // set default values to score and move trackers.
-        player1Score = 0;
-        player2Score = 0;
         numMoves = 0;
+        wonAlready = false;
 
         // init 3-d array into series of empty buttons
 
         for(int i =0; i < board.length; i++){
             for(int j = 0; j < board[i].length; j++){
-                board[i][j].setText(" - ");
+                board[i][j].setText(EMPTY);
             }
         }
     }
@@ -93,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
         }
         String buttonText = currButton.getText().toString();
         // invalid move, do nothing
-        if(!buttonText.equals("")){
+        if(!buttonText.equals(EMPTY)){
             return;
         } else if(player1Turn){
             currButton.setText("X"); // player 1 is x
@@ -107,23 +121,27 @@ public class MainActivity extends AppCompatActivity {
                 player1Score++;
                 player1Text.setText("Player 1: " + player1Score);
                 player2Text.setText("Player 2: " + player2Score);
-                Toast.makeText(this, "Player 1 wins! Player 2 takes Ls", Toast.LENGTH_LONG).show();
-                reset();
+                Toast.makeText(this, "Player 1 wins! Player 2 takes Ls", Toast.LENGTH_SHORT).show();
+
             } else {
                 player2Score++;
                 player1Text.setText("Player 1: " + player1Score);
                 player2Text.setText("Player 2: " + player2Score);
-                Toast.makeText(this, "Player 2 wins! Player 1 takes Ls", Toast.LENGTH_LONG).show();
-                reset();
+                Toast.makeText(this, "Player 2 wins! Player 1 takes Ls", Toast.LENGTH_SHORT).show();
+
             }
         } else if(numMoves == 9){
             // there is a tie
             tie();
+
         } else{
             // set the player1 turn to NOT what it currently is.
             // if player1 just went, it is player2's turn and vice versa
             player1Turn = !player1Turn;
+            return;
         }
+
+        Toast.makeText(this, "Press reset to play again!", Toast.LENGTH_LONG).show();
 
 
     }
@@ -148,7 +166,7 @@ public class MainActivity extends AppCompatActivity {
             Button index2 = board[i][1];
             Button index3 = board[i][2];
 
-            if(index1 == index2 && index2 == index3){
+            if(checkEqual(index1, index2, index3)){
                 return true; // there is a win in the horizontal direction
             }
         }
@@ -166,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
             Button index2 = board[1][i];
             Button index3 = board[2][i];
 
-            if(index1 == index2 && index2 == index3){
+            if(checkEqual(index1, index2, index3)){
                 return true;
             }
         }
@@ -185,25 +203,38 @@ public class MainActivity extends AppCompatActivity {
         Button index1 = board[0][0];
         Button index2 = board[1][1];
         Button index3 = board[2][2];
-        if(index1 == index2 && index2 == index3){
+        if(checkEqual(index1, index2, index3)){
             return true; // "forward" diagonal win
         } else {
             index1 = board[0][2];
+
             index3 = board[2][0];
-            if(index1 == index2 && index2 == index3){
+            if(checkEqual(index1, index2, index3)){
                 return true; // "backward" diagonal win
             }
         }
         return false; // no diagonal wins
     }
 
+    private boolean checkEqual(Button one, Button two, Button three){
+        String index1 = one.getText().toString();
+        String index2 = two.getText().toString();
+        String index3 = three.getText().toString();
+        if(!index1.equals(EMPTY) &&!index2.equals(EMPTY) &&!index3.equals(EMPTY) ) {
+            if (index1.equals(index2) && index2.equals(index3)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     /**
      * In the case that there is a tie, pop a toast and reset the game
      *
      */
-    private void tie(){
-        Toast.makeText(this, "There was a tie, everyone takes L's", Toast.LENGTH_LONG).show();
-        reset();
+    private void tie() {
+        Toast.makeText(this, "There was a tie, everyone takes L's", Toast.LENGTH_SHORT).show();
+
     }
+
 }
