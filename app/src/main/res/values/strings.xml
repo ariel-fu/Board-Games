@@ -12,12 +12,20 @@
 
     <string name="player1">Player 1: 0 </string>
     <string name="player2">Player 2: 0 </string>
-    <string name="title_activity_tic_tac_toe">TicTacToe</string>
+
+
     <string name="hardReset"> Reset game </string>
     <string name="reset"> Reset board</string>
+
     <string name="title_activity_main">MainActivity</string>
-    <string name = "welcome_players">Welcome! </string>
-    <string name = "choose_game">Choose a game below: </string>
+    <string name="title_activity_tic_tac_toe">TicTacToe</string>
+
+    <string name="welcome_players">Welcome! </string>
+    <string name="choose_game">Choose a game below: </string>
     <string name="tic_tac_toe">~ Tic Tac Toe ~</string>
     <string name="connect_four">~ Connect Four ~</string>
+    <string name="coming_soon"> Coming Soon: </string>
+    <string name="player1Text">Player 1: </string>
+    <string name="player2Text">Player 2: </string>
+
 </resources>

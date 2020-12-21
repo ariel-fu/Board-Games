@@ -4,12 +4,13 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class TicTacToe extends AppCompatActivity {
+public class TicTacToe extends AppCompatActivity implements View.OnClickListener {
     private Button[][] board;   // change to our own Board implementation
 
     private boolean player1Turn;
@@ -18,7 +19,7 @@ public class TicTacToe extends AppCompatActivity {
     private int numMoves;
     private TextView player1Text;
     private TextView player2Text;
-    private boolean wonAlready;
+    private boolean isWinner ;
     private String EMPTY = " - ";
 
 
@@ -28,7 +29,7 @@ public class TicTacToe extends AppCompatActivity {
 
         // set player1turn to true (player1 starts first)
         player1Turn = true;
-        wonAlready = false;
+        isWinner = false;
         // set default values to score and move trackers.
         player1Score = 0;
         player2Score = 0;
@@ -42,7 +43,7 @@ public class TicTacToe extends AppCompatActivity {
         setContentView(R.layout.activity_tic_tac_toe);
 
         player1Text = findViewById(R.id.player1Text);
-        player2Text = findViewById(R.id.player2);
+        player2Text = findViewById(R.id.player2Text);
 
         for(int i = 0; i<3; i++){
             for(int j = 0; j < 3; j++){
@@ -72,8 +73,8 @@ public class TicTacToe extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 reset();
-                player1Text.setText("Player 1: 0");
-                player2Text.setText("Player 2: 0");
+                player1Text.setText(R.string.player1);
+                player2Text.setText(R.string.player2);
             }
         });
 
@@ -88,7 +89,7 @@ public class TicTacToe extends AppCompatActivity {
         player1Turn = true;
         // set default values to score and move trackers.
         numMoves = 0;
-        wonAlready = false;
+        isWinner = false;
 
         // init 3-d array into series of empty buttons
 
@@ -106,46 +107,71 @@ public class TicTacToe extends AppCompatActivity {
             return;
         }
         String buttonText = currButton.getText().toString();
-        // invalid move, do nothing
-        if(!buttonText.equals(EMPTY)){
-            return;
-        } else if(player1Turn){
-            currButton.setText("X"); // player 1 is x
-        } else{
-            currButton.setText("0"); // player 2 is y
-        }
-        numMoves++; // keep track of moves to see if there is a tie (ie all of the board is filled without a win)
-
-        if(isWin()){
-            if(player1Turn){
-                player1Score++;
-                player1Text.setText("Player 1: " + player1Score);
-                player2Text.setText("Player 2: " + player2Score);
-                Toast.makeText(this, "Player 1 wins! Player 2 takes Ls", Toast.LENGTH_SHORT).show();
-
+        if(!isWinner) {
+            // invalid move, do nothing
+            if (!buttonText.equals(EMPTY)) {
+                return;
+            } else if (player1Turn) {
+                currButton.setText("X"); // player 1 is x
             } else {
-                player2Score++;
-                player1Text.setText("Player 1: " + player1Score);
-                player2Text.setText("Player 2: " + player2Score);
-                Toast.makeText(this, "Player 2 wins! Player 1 takes Ls", Toast.LENGTH_SHORT).show();
-
+                currButton.setText("0"); // player 2 is y
             }
-        } else if(numMoves == 9){
-            // there is a tie
-            tie();
+            numMoves++; // keep track of moves to see if there is a tie (ie all of the board is filled without a win)
 
-        } else{
-            // set the player1 turn to NOT what it currently is.
-            // if player1 just went, it is player2's turn and vice versa
-            player1Turn = !player1Turn;
-            return;
+            if (isWin()) {
+                if (player1Turn) {
+                    isWinner = true;
+                    player1Score++;
+                    String player1 = getString(R.string.player1Text) + player1Score;
+                    player1Text.setText(player1);
+                    showToast("Player 1 wins!");
+                    isWinner = true;
+                } else {
+                    isWinner = true;
+                    player2Score++;
+                    String player2 = getString(R.string.player2Text) + player2Score;
+                    player2Text.setText(player2);
+                    showToast("Player 2 wins!");
+
+                }
+            } else if (numMoves == 9) {
+                // there is a tie
+                isWinner = true;
+                showToast("Tie, no one won T~T");
+            } else {
+                // set the player1 turn to NOT what it currently is.
+                // if player1 just went, it is player2's turn and vice versa
+                player1Turn = !player1Turn;
+                return;
+            }
         }
 
-        Toast.makeText(this, "Press reset to play again!", Toast.LENGTH_LONG).show();
+        showToast("Press RESET BOARD to play again");
 
 
     }
 
+    public void showToast(String text) {
+        // Set the toast and duration
+
+        int toastDurationInMilliSeconds = 1000;
+        Toast toast = Toast.makeText(this, text, Toast.LENGTH_LONG);
+
+        // Set the countdown to display the toast
+        CountDownTimer toastCountDown;
+        toastCountDown = new CountDownTimer(toastDurationInMilliSeconds, 20 /*Tick duration*/) {
+            public void onTick(long millisUntilFinished) {
+                toast.show();
+            }
+            public void onFinish() {
+                toast.cancel();
+            }
+        };
+
+        // Show the toast and starts the countdown
+        toast.show();
+        toastCountDown.start();
+    }
     /**
      * Checks if there is a win either in the horizontal, diagonal, or vertical direction
      * @return true if there is
@@ -228,13 +254,5 @@ public class TicTacToe extends AppCompatActivity {
         return false;
     }
 
-    /**
-     * In the case that there is a tie, pop a toast and reset the game
-     *
-     */
-    private void tie() {
-        Toast.makeText(this, "There was a tie, everyone takes L's", Toast.LENGTH_SHORT).show();
-
-    }
 
 }

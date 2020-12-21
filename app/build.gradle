@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId "ariel.games.TTT"
-        minSdkVersion 16
+        minSdkVersion 26
         targetSdkVersion 29
         versionCode 3
         versionName "3.0"
