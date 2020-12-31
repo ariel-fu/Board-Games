@@ -3,5 +3,10 @@
     <color name="colorPrimary">#E0D2F3</color>
     <color name="greenBlue">#3B009688</color>
     <color name="colorAccent">#95ADCCDC</color>
-    <color name = "resetButton">#C1F3DCDC</color>
+    <color name = "player1">#F3DCDC</color>
+    <color name = "player2">#A8D3EA</color>
+    <color name="background">#77AAA8A8</color>
+    <color name="noTurn">#FFFFFF</color>
+    <color name="button">#B6E8FF</color>
+    <color name="lighterButton">#CFEFFD</color>
 </resources>

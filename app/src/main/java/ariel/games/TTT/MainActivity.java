@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity{
 
@@ -24,6 +25,18 @@ public class MainActivity extends AppCompatActivity{
                 startActivity(intent);
             }
         });
+
+        Button connect_four = (Button) findViewById(R.id.connect_four);
+        connect_four.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), ConnectFour.class);
+                startActivity(intent);
+                Toast toast = Toast.makeText(MainActivity.this, "Nothing here yet. Routing you back to the main page.", Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        });
+
 
     }
 

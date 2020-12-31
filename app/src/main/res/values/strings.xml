@@ -25,7 +25,7 @@
     <string name="tic_tac_toe">~ Tic Tac Toe ~</string>
     <string name="connect_four">~ Connect Four ~</string>
     <string name="coming_soon"> Coming Soon: </string>
-    <string name="player1Text">Player 1: </string>
-    <string name="player2Text">Player 2: </string>
+    <string name="player1Text">Player 1:  </string>
+    <string name="player2Text">Player 2:  </string>
 
 </resources>

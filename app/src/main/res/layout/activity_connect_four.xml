@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="ariel.games.TTT.TicTacToe">
-
+    tools:context=".ConnectFour">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -71,36 +70,61 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:background="@color/background">
+
         <Button
             android:id="@+id/button_00"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/circle"
+
+            android:backgroundTint="@color/noTurn"
             android:freezesText="true"
-            android:backgroundTint="@color/colorAccent"
+
             android:textSize="60sp" />
+    <!-- ok, not sure if we can fit a 6 x 7 board here... need to compress the circles
+     * can't change the size inside the drawable xml file
+     * can change using layout_xxxx = "xxx" -->
         <Button
             android:id="@+id/button_01"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:backgroundTint="@color/colorAccent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/circle"
+            android:backgroundTint="@color/noTurn"
             android:freezesText="true"
             android:textSize="60sp" />
         <Button
             android:id="@+id/button_02"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:backgroundTint="@color/colorAccent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/circle"
+
+            android:backgroundTint="@color/noTurn"
             android:freezesText="true"
+
             android:textSize="60sp" />
+        <Button
+            android:id="@+id/button_03"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/circle"
+
+            android:backgroundTint="@color/noTurn"
+            android:freezesText="true"
+
+            android:textSize="60sp"
+            />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:background="@color/background">
 
         <Button
             android:id="@+id/button_10"
@@ -108,7 +132,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:freezesText="true"
-            android:backgroundTint="@color/colorAccent"
+            android:backgroundTint="@color/noTurn"
+
             android:textSize="60sp" />
         <Button
             android:id="@+id/button_11"
@@ -116,7 +141,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:freezesText="true"
-            android:backgroundTint="@color/colorAccent"
+            android:backgroundTint="@color/noTurn"
             android:textSize="60sp" />
         <Button
             android:id="@+id/button_12"
@@ -124,19 +149,20 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:freezesText="true"
-            android:backgroundTint="@color/colorAccent"
+            android:backgroundTint="@color/noTurn"
             android:textSize="60sp" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:background="@color/background">
         <Button
             android:id="@+id/button_20"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:backgroundTint="@color/colorAccent"
+            android:backgroundTint="@color/noTurn"
             android:freezesText="true"
             android:textSize="60sp" />
         <Button
@@ -145,15 +171,16 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:freezesText="true"
-            android:backgroundTint="@color/colorAccent"
+            android:backgroundTint="@color/noTurn"
             android:textSize="60sp" />
+
         <Button
             android:id="@+id/button_22"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:backgroundTint="@color/noTurn"
             android:freezesText="true"
-            android:backgroundTint="@color/colorAccent"
             android:textSize="60sp" />
     </LinearLayout>
 </LinearLayout>

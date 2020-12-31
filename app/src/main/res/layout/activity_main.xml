@@ -50,7 +50,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="@drawable/rounded_button"
-            android:backgroundTint="@color/colorPrimary"
 
             android:text="@string/tic_tac_toe"
             android:textSize="25sp" />
@@ -60,6 +59,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="50dp"
+            android:paddingBottom="50dp"
             android:text = "@string/coming_soon"
             android:gravity="center"
             android:textAllCaps="true"
@@ -67,22 +67,23 @@
             android:textStyle="bold"
             />
 
+        <Button
+            android:id="@+id/connect_four"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+
+            android:background="@drawable/rounded_button"
+
+
+            android:text="@string/connect_four"
+            android:textSize="25sp"
+            app:layout_anchor="@+id/include"
+            app:layout_anchorGravity="center" />
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/connect_four"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
 
-        android:background="@drawable/rounded_button"
-        android:backgroundTint="@color/colorPrimary"
-
-        android:text="@string/connect_four"
-        android:textSize="25sp"
-        app:layout_anchor="@+id/include"
-        app:layout_anchorGravity="center" />
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
